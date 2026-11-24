@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: tests (ubuntu + python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.9", "3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Shell syntax check
+        run: bash -n saml-hud.sh
+
+      - name: Engine compiles
+        run: |
+          sed -n '/^#__PY_START__$/,/^#__PY_END__$/p' saml-hud.sh | sed '1d;$d' > /tmp/engine.py
+          python -m py_compile /tmp/engine.py
+
+      - name: Regression suite (stdlib only)
+        run: |
+          chmod +x saml-hud.sh tests/run_tests.sh
+          ./tests/run_tests.sh
+
+  stdlib-only:
+    name: works without third-party packages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Uninstall optional accelerators
+        run: pip uninstall -y lxml cryptography signxml rich || true
+      - name: Verify signatures with the pure-Python engine
+        run: |
+          chmod +x saml-hud.sh
+          ./saml-hud.sh samples/signed_response.b64 -c samples/idp_cert.pem | tee /tmp/out.txt
+          grep -q "Valid Signature (pinned key)" /tmp/out.txt
+          grep -q "engine stdlib" /tmp/out.txt
