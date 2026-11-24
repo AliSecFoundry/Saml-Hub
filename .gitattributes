@@ -1,0 +1,8 @@
+* text=auto eol=lf
+*.sh   text eol=lf
+*.py   text eol=lf
+*.pem  text eol=lf
+*.b64  text eol=lf
+*.har  text eol=lf
+*.svg  text
+samples/sp_private.pem  -text diff

@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Local captures & secrets — never commit live SAML tokens or private keys
+*.capture
+*.har.local
+*.pem.local
+*.key
+*_private*.pem
+samples/sp_private.pem
+*.log
+output/
