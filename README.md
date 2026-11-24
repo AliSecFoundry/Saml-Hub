@@ -31,7 +31,7 @@
 ## Install
 
 ```bash
-https://github.com/AliSecFoundry/Saml-Hub.git
+git clone https://github.com/AliSecFoundry/Saml-Hub.git
 cd saml-hud
 chmod +x saml-hud.sh
 
