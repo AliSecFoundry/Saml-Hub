@@ -34,7 +34,7 @@ offline. SAML HUD does the same job **locally, from your terminal**, with no ins
 ## Install
 
 ```bash
-git clone https://github.com/<you>/saml-hud.git
+https://github.com/AliSecFoundry/Saml-Hub.git
 cd saml-hud
 chmod +x saml-hud.sh
 
