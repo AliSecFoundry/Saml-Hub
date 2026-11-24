@@ -19,9 +19,6 @@
 
 ## Why
 
-`samltool.io` / `samltool.com` are great, but they are **cloud services**. During an engagement you often cannot
-paste a customer's live SAMLResponse (session tokens, PII) into a third-party website, and lab boxes are frequently
-offline. SAML HUD does the same job **locally, from your terminal**, with no install and no telemetry.
 
 * **One file.** `saml-hud.sh` — bash entry point + embedded Python 3 engine (stdlib only).
 * **No dependencies.** Works on a stock Kali install with just `python3`. If `lxml` / `cryptography` are present it
